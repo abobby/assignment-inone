@@ -14,13 +14,13 @@
                             <p>{{ \Session::get('success') }}</p>
                         </div>
                     @endif
-                    <form class="form" method="post" action="{{url('member/update-member')}}">
+                    <form id="memberadd" class="form" method="post" action="{{url('member/save-member')}}">
                         {{csrf_field()}}
                         <div class="row">
                             <div class="col-md-6 text-left">
                                 <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
-                                    <label>First Name</label>
-                                    <input type="text" name="first_name" placeholder="First Name" value="{{$userinfo->first_name}}" class="form-control" />
+                                    <label>First Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="first_name" placeholder="First Name" value="{{$userinfo->first_name}}" class="form-control" required />
                                     @if ($errors->has('first_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('first_name') }}</strong>
@@ -28,8 +28,8 @@
                                     @endif
                                 </div>
                                 <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
-                                    <label>Last Name</label>
-                                    <input type="text" name="last_name" placeholder="Last Name" value="{{$userinfo->last_name}}" class="form-control" />
+                                    <label>Last Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="last_name" placeholder="Last Name" value="{{$userinfo->last_name}}" class="form-control" required />
                                     @if ($errors->has('last_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('last_name') }}</strong>
@@ -37,8 +37,8 @@
                                     @endif
                                 </div>
                                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                    <label>Email</label>
-                                    <input type="email" name="email" placeholder="Email ID" value="{{$userinfo->email}}" class="form-control" />
+                                    <label>Email <span class="text-danger">*</span></label>
+                                    <input type="email" name="email" placeholder="Email ID" value="{{$userinfo->email}}" class="form-control" required />
                                     @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -55,8 +55,9 @@
                                     @endif
                                 </div>
                                 <div class="form-group{{ $errors->has('country') ? ' has-error' : '' }}">
-                                    <label>Country</label>
-                                    <select name="country" class="form-control">
+                                    <label>Country <span class="text-danger">*</span></label>
+                                    <select name="country" class="form-control" required>
+                                        <option value="">Select Country</option>
                                         <option value="AFG">Afghanistan</option>
                                         <option value="ALA">Åland Islands</option>
                                         <option value="ALB">Albania</option>
@@ -316,8 +317,8 @@
                             </div>
                             <div class="col-md-6 text-left">
                                 <div class="form-group{{ $errors->has('dateofbirth') ? ' has-error' : '' }}">
-                                    <label>Birth Date</label>
-                                    <input type="date" name="dateofbirth" placeholder="Date of Birth" value="{{$userdetail->birth_date}}" class="form-control" max="<?php echo date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d", time()))) . " - 13 years")); ?>"/>
+                                    <label>Birth Date <span class="text-danger">*</span></label>
+                                    <input type="date" name="dateofbirth" placeholder="Date of Birth" value="{{$userdetail->birth_date}}" class="form-control" max="<?php echo date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d", time()))) . " - 13 years")); ?>" required />
                                     @if ($errors->has('dateofbirth'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('dateofbirth') }}</strong>
@@ -325,8 +326,8 @@
                                     @endif
                                 </div>
                                 <div class="form-group{{ $errors->has('aboutyou') ? ' has-error' : '' }}">
-                                    <label>About Member</label>
-                                    <textarea name="aboutyou" class="form-control" rows="12" placeholder="About Member">{{$userdetail->about_you}}</textarea>
+                                    <label>About Member <span class="text-danger">*</span></label>
+                                    <textarea name="aboutyou" class="form-control" rows="12" placeholder="About Member" required>{{$userdetail->about_you}}</textarea>
                                     @if ($errors->has('aboutyou'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('aboutyou') }}</strong>
@@ -337,7 +338,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-lg btn-success">Update Details</button>
+                                <button type="submit" class="btn btn-lg btn-success">Add Member Now</button>
                             </div>
                         </div>
                     </form>

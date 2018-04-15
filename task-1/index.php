@@ -25,9 +25,10 @@ function buildHierarchy($flattened_data) {
     }
     return $roots;
 }
-
-$flattened_data = file_get_contents('flattened.json');
+$datafolder = 'data/';
+$flattened_data = file_get_contents($datafolder.'flattened.json');
 $parsed_data = json_decode($flattened_data, true);
 $hierarchical_structure = buildHierarchy($parsed_data);
 $hierarchical_json = json_encode($hierarchical_structure, JSON_PRETTY_PRINT);
-file_put_contents('hierarchical.json', $hierarchical_json);
+file_put_contents($datafolder.'hierarchical.json', $hierarchical_json);
+echo "<center><h2>Json generated in data folder</h2></center>";

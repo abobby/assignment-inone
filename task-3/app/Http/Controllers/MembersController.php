@@ -32,7 +32,7 @@ class MembersController extends Controller
         $validatedData = $this->validate($request,[
             'first_name' => 'required|alpha_dash|max:80',
             'last_name' => 'required|alpha_dash|max:80',
-            'email' => 'required|email|max:80',
+            'email' => 'required|email|unique:members,email|max:80',
             'phone' => 'digits_between:10,15|max:20',
             'country' => 'required|alpha|max:3',
             'dateofbirth' => 'required|date',
@@ -68,9 +68,6 @@ class MembersController extends Controller
             DB::rollBack();
             return back()->with('error', 'Some issue occured while creating member. Please try again.');
         }
-        
-        
-        
     }
     
     /**
@@ -105,13 +102,16 @@ class MembersController extends Controller
      */
     public function editMember($id){
         $userdata = \App\Members::find($id);
-        $userdetails = \App\Members::find($id)->memberdetails;
-        //echo "<pre>";
-        //var_dump($userdata->user_id);
-        return view('member.edit-member', [
-            'userinfo' => $userdata,
-            'userdetail' => $userdetails,
-        ]);
+        if(count($userdata) > 0){
+            $userdetails = \App\Members::find($id)->memberdetails;
+            return view('member.edit-member', [
+                'userinfo' => $userdata,
+                'userdetail' => $userdetails,
+            ]);
+        } else {
+            abort(404);
+        }
+        
     }
     
     /**
