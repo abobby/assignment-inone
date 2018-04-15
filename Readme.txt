@@ -10,8 +10,8 @@ Please write PHP code that converts flattened JSON (flattened.json) into a hiera
 
 <SOLUTION>
 1. Data Folder Contains the sample json files
-2. hierarchical.json is an empty file
-3. index.php (Contains the code logic for Task 1 for converting flattened JSON 'flattened.json' into a hierarchical JSON 'hierarchical.json')
+2. index.php (Contains the code logic for Task 1 to convert flattened JSON 'flattened.json' into a hierarchical JSON 'hierarchical.json')
+3. hierarchical.json is an empty file
 4. When index.php is executed the output is written in 'hierarchical.json'
 
 -----------------------------------
