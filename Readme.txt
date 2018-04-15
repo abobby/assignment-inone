@@ -1,7 +1,8 @@
 ### ASSIGNMENT DETAILS ###
 ==========================
 
-Git Repository for all the Assignment Tasks : https://github.com/abobby/assignment-inone.git
+Git repository for all the tasks of assignment
+https://github.com/abobby/assignment-inone.git
 
 -----------------------------------
 @Task 1 <Folder : task-1>
