@@ -6,7 +6,7 @@ Git Repository for all the Assignment Tasks : https://github.com/abobby/assignme
 -----------------------------------
 @Task 1 <Folder : task-1>
 -----------------------------------
-Please write PHP code that converts flattened JSON (flattened.json) into a hierarchical JSON (hierarchical.json). You will find the JSON files in the attachment.
+Please write PHP code that converts flattened JSON into a hierarchical JSON.
 
 <SOLUTION>
 1. Data Folder Contains the sample json files
