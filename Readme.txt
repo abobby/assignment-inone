@@ -35,8 +35,8 @@ Save user information captured from a form into a database, then retrieve and sh
 2. composer install
 3. cp .env.local .env
 4. php artisan key:generate
-5. Create mysql database
+5. Create mysql database <mymembers>
 6. Add Database and database access credentials in .env file
 7. php artisan migrate
-8. php artisan seed
+8. php artisan db:seed
 9. php artisan serve
