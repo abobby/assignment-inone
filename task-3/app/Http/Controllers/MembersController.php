@@ -19,8 +19,10 @@ class MembersController extends Controller
      * This function displays the Member Creation form
      */
     public function createMember() {
-        
-        return view('member.add-member');
+        $countries = \App\Countries::all();
+        return view('member.add-member', [
+            'countries' => $countries
+        ]);
     }
     
     /**
@@ -30,8 +32,8 @@ class MembersController extends Controller
      */
     public function saveMember(Request $request){
         $validatedData = $this->validate($request,[
-            'first_name' => 'required|alpha_dash|max:80',
-            'last_name' => 'required|alpha_dash|max:80',
+            'first_name' => 'required|max:80',
+            'last_name' => 'required|max:80',
             'email' => 'required|email|unique:members,email|max:80',
             'phone' => 'digits_between:10,15|max:20',
             'country' => 'required|alpha|max:3',
@@ -73,11 +75,13 @@ class MembersController extends Controller
     /**
      * This displays list of all members
      */
-    
     public function listMembers() {
         return view('member.list-members');
     }
     
+    /**
+     * Fetch list of all members from database
+     */
     public function listMembersData() {
         $members = Members::select(['id', 'first_name', 'last_name', 'email', 'phone']);
         return Datatables::of($members)
@@ -88,37 +92,64 @@ class MembersController extends Controller
     }
     
     /**
-     * Fetch list of all members from database
-     * @param type $from
-     * @param type $limit
-     */
-    private function fetchMembers($from, $limit = 15){
-        
-    }
-    
-    /**
      * Edit Member Details for specific member
      * @param type $id Member ID
      */
     public function editMember($id){
         $userdata = \App\Members::find($id);
         if(count($userdata) > 0){
+            $countries = \App\Countries::all();
             $userdetails = \App\Members::find($id)->memberdetails;
             return view('member.edit-member', [
                 'userinfo' => $userdata,
                 'userdetail' => $userdetails,
+                'countries' => $countries
             ]);
         } else {
             abort(404);
         }
-        
     }
     
     /**
      * 
      * @param Request $request
      */
-    private function updateMember(Request $request){
+    public function updateMember(Request $request){
+        $validatedData = $this->validate($request,[
+            'first_name' => 'required|max:80',
+            'last_name' => 'required|max:80',
+            'email' => 'required|email|max:80',
+            'phone' => 'digits_between:10,15|max:20',
+            'country' => 'required|alpha|max:3',
+            'dateofbirth' => 'required|date',
+            'aboutyou' => 'required',
+        ]);
         
+        try {
+            DB::beginTransaction();
+            $datetime = new \DateTime();
+            $addMember = \App\Members::find($request->memid)->update([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'updated_at' => $datetime,
+                'status' => 1,
+            ]);
+            
+            $dob = date('Y-m-d',strtotime($request->dateofbirth));
+            
+            $addMemberDetails = \App\MemberDetails::where('user_id', $request->memid)->update([
+                'birth_date' => $dob,
+                'country' => $request->country,
+                'about_you' => $request->aboutyou,
+                'updated_at' => $datetime,
+            ]);
+            DB::commit();
+            return back()->with('success', 'Member Successfully updated');
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return back()->with('error', 'Some issue occured while updating member. Please try again.');
+        }
     }
 }

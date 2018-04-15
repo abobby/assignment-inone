@@ -21,4 +21,5 @@ Route::group(['middleware' => 'web','prefix'=>'/member'], function(){
      Route::get('/members-list-data','MembersController@listMembersData')
      ->name('members.data');;
      Route::get('/edit-member/{id}','MembersController@editMember');
+     Route::post('/update-member','MembersController@updateMember');
 });
