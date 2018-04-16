@@ -8,6 +8,7 @@ CREATE TABLE `products` (
     `updated_at` datetime NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+ALTER TABLE `products` ADD INDEX(`name`);
 INSERT INTO `problem_2`.`products` (`name`, `is_active`, `created_at`, `updated_at`) VALUES ('Earphones', 1, NOW(), NOW());
 INSERT INTO `problem_2`.`products` (`name`, `is_active`, `created_at`, `updated_at`) VALUES ('Memory Card', 1, NOW(), NOW());
 INSERT INTO `problem_2`.`products` (`name`, `is_active`, `created_at`, `updated_at`) VALUES ('Hammer', 1, NOW(), NOW());
